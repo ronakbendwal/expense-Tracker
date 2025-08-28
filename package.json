@@ -11,6 +11,7 @@
   "author": "Ronak bendwal",
   "license": "ISC",
   "dependencies": {
+    "cloudinary": "^2.7.0",
     "cookieparser": "^0.1.0",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
