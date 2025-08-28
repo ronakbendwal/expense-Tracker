@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { DBName } from "../constants.js";
-const url="mongodb+srv://ronakbendwal:meengineerhu@cluster0.tklo2hk.mongodb.net/";
+const url=process.env.DB_URL;
 
 
 const connectDB=async()=>{
