@@ -3,6 +3,23 @@ import { apiResponse } from "../Utils/apiResponse.js";
 import { apiError } from "../Utils/apiError.js";
 import { USER } from "../Models/user.models.js";
 import { uploadOnCloudinary } from "../Utils/cloudinary.js";
+
+const generateAccessRefreshToken=async(userId)=>{
+try{
+const user=await USER.findById(userId);
+if(!user){
+  throw new apiError(401,"User Not Found While Generating Token's")
+}
+const accessToken=user.generateAccessToken();
+const refreshToken=user.generateRefreshToken();
+ user.refreshToken = refreshToken
+ await user.save({validateBeforeSave:false})
+ return {accessToken,refreshToken}
+
+}catch(error){
+  throw new apiError(500,"Server Error While Token's Generate")
+}
+}
 const createUser=asyncHandle(async(req,res)=>{
   //if we wanna create user first get all the info from body
   //check field are empty or not 
@@ -74,22 +91,11 @@ const createUser=asyncHandle(async(req,res)=>{
   )
 })
 
-const loginUser=asyncHandle(async(req,res)=>{
-  //get the user info from body
-  //check field are empty or not
-  //check field are exist or not
-  //if exist then check password fiels
-  //now compare password with the encoded password
-  //now if all things matches then login the user
 
-  const {username,password,email}=req.body
-
-  const userinfo=await USER.findOne({
-    $or:[{username},{email}]
-  })
-})
 
 
 export {
   createUser,
+  loginUser,
+
 }
