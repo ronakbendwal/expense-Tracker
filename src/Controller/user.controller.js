@@ -58,7 +58,7 @@ const createUser=asyncHandle(async(req,res)=>{
   })
 
   const userObjectReferance=await USER.findById(userObject._id)
-  .select("-pasword")
+  .select("-password")
 
   if(!userObjectReferance){
     throw new apiError(500,"Error While Creating User")
@@ -72,8 +72,6 @@ const createUser=asyncHandle(async(req,res)=>{
       "User Sucessfully Created "
     )
   )
-
-
 })
 
 const loginUser=asyncHandle(async(req,res)=>{
@@ -94,5 +92,4 @@ const loginUser=asyncHandle(async(req,res)=>{
 
 export {
   createUser,
-
 }
