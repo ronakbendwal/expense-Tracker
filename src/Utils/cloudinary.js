@@ -20,7 +20,7 @@ try{
     return uploadResponse
 
 }catch(error){
-fs.unlink(localpath)
+fs.unlinkSync(localpath)
 return null
 }
 }

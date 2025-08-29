@@ -1,3 +1,3 @@
-const DBName="Expense Tracker";
+const DBName="ExpenseTracker";
 
 export {DBName};

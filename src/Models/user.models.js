@@ -7,7 +7,7 @@ const userSchema=new Schema({
     required:true
   },
 
-  passward:{
+  password:{
     type:String,
     required:true
   },
@@ -22,10 +22,10 @@ const userSchema=new Schema({
     required:true
   },
 
-  avtarimage:{
-  type:string,//from cloudinary
-  required:true
-  }
+  // avtarimage:{
+  //   type:String,
+  //   required:true
+  // }
 
 },{timestamps:true})
 
