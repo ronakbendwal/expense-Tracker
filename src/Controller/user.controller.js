@@ -91,7 +91,65 @@ const createUser=asyncHandle(async(req,res)=>{
   )
 })
 
+const loginUser=asyncHandle(async(req,res)=>{
+  //get the user info from body
+  //check field are empty or not
+  //check field are exist or not
+  //if exist then check password fiels
+  //now compare password with the encoded password
+  //now if all things matches then login the user
 
+  const {username,password,email}=req.body
+
+  if(!username && !email){
+    throw new apiError(400,"username or email required")
+  }
+
+  const userinfo=await USER.findOne({
+    $or:[{username},{email}]
+  })
+
+  if(!userinfo){
+    throw new apiError(401,"User Not Exist In Records")
+  }
+
+  if(!password){
+    throw new apiError(401,"Password required")
+  }
+
+  const checkedPassword=userinfo.isPasswordCorrect(password)
+
+  if(!checkedPassword){
+    throw new apiError(401,"Wrong Password")
+  }
+
+  const {accessToken,refreshToken}=generateAccessRefreshToken(userinfo._id)
+
+  const loggedInUser=await USER.findById(userinfo._id).select("-password -refreshToken")
+
+  if(!loggedInUser){
+    throw new apiError(400,"user not logged in")
+  }
+
+  const options={
+    httpOnly:true,
+    secure:true
+  }
+
+  return res.status(200)
+  .cookie("accessToken",accessToken,options)
+  .cookie("refreshToken",refreshToken,options)
+  .json(
+    new apiResponse(
+      201,
+      {
+        user: loggedInUser, refreshToken, accessToken
+        //after declare access token and refresh token cookie we can not get it at the body directly
+      },
+      "User SucessFully LoggedIn"
+    )
+  )
+})
 
 
 export {
