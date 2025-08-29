@@ -51,31 +51,31 @@ const createUser=asyncHandle(async(req,res)=>{
     throw new apiError(402,"User Already Exist")
   }
 
-  //here we get image file from user
-  // const avtarImageLocalPath=req.files?.avtarimage[0].path;
+  // here we get image file from user
+  const avtarImageLocalPath=req.files?.avtarimage[0].path;
 
-  // console.log(avtarImageLocalPath);
+  console.log(avtarImageLocalPath);
 
-  // if(!avtarImageLocalPath){
-  //   throw new apiError(401,"Avtar Image Required")
-  // }
+  if(!avtarImageLocalPath){
+    throw new apiError(401,"Avtar Image Required")
+  }
 
-  // const fileUploaded=await uploadOnCloudinary(avtarImageLocalPath);
+  const fileUploaded=await uploadOnCloudinary(avtarImageLocalPath);
 
-  // if(!fileUploaded){
-  //   throw new apiError(401,"Avtar File Not Uploaded")
-  // }
+  if(!fileUploaded){
+    throw new apiError(401,"Avtar File Not Uploaded")
+  }
 
   const userObject=await USER.create({
     username:username.toLowerCase(),
     email,
     password,
     fullname,
-    // avtarimage:fileUploaded.url
+    avtarimage:fileUploaded.url
   })
 
   const userObjectReferance=await USER.findById(userObject._id)
-  .select("-password")
+  .select("-password -refreshToken")
 
   if(!userObjectReferance){
     throw new apiError(500,"Error While Creating User")

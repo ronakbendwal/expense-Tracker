@@ -1,6 +1,6 @@
-import express from "express"
+
 import { app } from "./app.js"
-import connectDB from "./DB_Connectivity/ConnectToMongo.js"
+import connectDB from "./DB_Connectivity/index.js"
 import dotenv from "dotenv"
 
 dotenv.config({path:'./.env'})
@@ -8,7 +8,7 @@ dotenv.config({path:'./.env'})
 connectDB()
 .then(()=>{
 
-  app.listen(process.env.PORT,()=>{
+  app.listen(process.env.PORT || 8000 ,()=>{
     
     console.log("project running at port :", process.env.PORT)
 

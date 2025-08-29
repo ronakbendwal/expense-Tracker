@@ -24,10 +24,10 @@ const userSchema=new Schema({
     required:true
   },
 
-  // avtarimage:{
-  //   type:String,
-  //   required:true
-  // }
+  avtarimage:{
+    type:String,
+    required:true
+  }
 
 },{timestamps:true})
 
