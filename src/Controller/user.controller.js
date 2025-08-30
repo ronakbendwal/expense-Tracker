@@ -7,9 +7,7 @@ import { uploadOnCloudinary } from "../Utils/cloudinary.js";
 const generateAccessRefreshToken=async(userId)=>{
 try{
 const user=await USER.findById(userId);
-if(!user){
-  throw new apiError(401,"User Not Found While Generating Token's")
-}
+
 const accessToken=user.generateAccessToken();
 const refreshToken=user.generateRefreshToken();
  user.refreshToken = refreshToken
@@ -123,7 +121,7 @@ const loginUser=asyncHandle(async(req,res)=>{
     throw new apiError(401,"Wrong Password")
   }
 
-  const {accessToken,refreshToken}=generateAccessRefreshToken(userinfo._id)
+  const {accessToken,refreshToken}=await generateAccessRefreshToken(userinfo?._id)
 
   const loggedInUser=await USER.findById(userinfo._id).select("-password -refreshToken")
 
@@ -135,7 +133,6 @@ const loginUser=asyncHandle(async(req,res)=>{
     httpOnly:true,
     secure:true
   }
-
   return res.status(200)
   .cookie("accessToken",accessToken,options)
   .cookie("refreshToken",refreshToken,options)
@@ -151,9 +148,45 @@ const loginUser=asyncHandle(async(req,res)=>{
   )
 })
 
+const logoutUser=asyncHandle(async(req,res)=>{
+  //check user is loggin or not by getting data from req.user after applying middleware
+  //remove the refresh token from the database
+  //send the response
+
+  // const user=await USER.findById(req.user._id)
+  await USER.findByIdAndUpdate(
+    req.user._id,
+    {
+      $set:{
+        refreshToken:undefined,
+      }
+    },{
+      new:true,
+    }
+  )
+
+  const options={
+    httpOnly:true,
+    secure:true,
+  }
+
+  return res.status(200)
+    .clearCookie("accessToken",options)
+    .clearCookie("accessToken",options)
+    .json(
+      new apiResponse(
+        200,
+      {},
+      "User Sucessfully LoggedOut"
+      )
+    )
+})
+
+
+
 
 export {
   createUser,
   loginUser,
-
+  logoutUser,
 }
