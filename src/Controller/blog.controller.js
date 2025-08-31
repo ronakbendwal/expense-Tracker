@@ -47,12 +47,12 @@ const createBlog=asyncHandle(async(req,res)=>{
 
 const deleteBlog=asyncHandle(async(req,res)=>{
   //get the blog info from params
-  const {title}=req.params
-  if(!title?.trim()===""){
-    throw new apiError(401,"Blog Not Found")
+  const blogId=req.params
+  if(!blogId){
+    throw new apiError(401,"User Not Found")
   }
 
-  await BLOG.findOneAndDelete(title)
+  await BLOG.findOneAndDelete(blogId)
 
   return res.status(201)
   .json(new apiResponse(201,
@@ -64,11 +64,12 @@ const deleteBlog=asyncHandle(async(req,res)=>{
 
 const updateBlog=asyncHandle(async(req,res)=>{
   //get the new data from user body
+  const blogId=req.params
   const {title}=req.body
   if(!title?.trim()==""){
     throw new apiError(401,"fields are required")
   }
-  const updated=await BLOG.findOneAndUpdate(title,
+  const updateBlog=await BLOG.findOneAndUpdate(blogId,
     {
       $set:{
         title

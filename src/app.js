@@ -16,8 +16,14 @@ app.use(cookieParser())
 
 app.use(express.static("public"))//yaha se hamari all files jo hume server se browser bhejna he wo jati he 
 //here below de definne routs
+
+
 import { userRouter } from "./Router/user.route.js"
+import { blogRoute } from "./Router/blog.route.js";
+
 
 app.use("/api/v1/user",userRouter)
+app.use("/api/v1/blog",blogRoute)
+
 
 export {app}
