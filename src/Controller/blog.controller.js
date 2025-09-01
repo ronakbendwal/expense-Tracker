@@ -1,8 +1,8 @@
-import { BLOG } from "../Models/blog.Model"
-import { USER } from "../Models/user.models"
-import {apiError} from "../Utils/apiError"
-import {apiResponse} from "../Utils/apiResponse"
-import {asyncHandle} from "../Utils/asyncHand"
+import { BLOG } from "../Models/blog.models.js"
+import { USER } from "../Models/user.models.js"
+import {apiError} from "../Utils/apiError.js"
+import {apiResponse} from "../Utils/apiResponse.js"
+import {asyncHandle} from "../Utils/asyncHand.js"
 
 const createBlog=asyncHandle(async(req,res)=>{
   //get the data from the body

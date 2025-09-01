@@ -5,14 +5,18 @@ title:{
   type:String,
   required:true
 },
-totalamount:{
-  type:String,
-  defult:0,
+totalAmount:{
+  type:Number,
+  default:0,
 },
 owner:{
   type:mongoose.Types.ObjectId,
   ref:"USER"
-}
+},
+payments:[{ 
+  type:mongoose.Types.ObjectId,
+  ref:"PAYMENT"
+}]
 },
 {timestamps:true})
 

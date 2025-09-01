@@ -5,7 +5,7 @@ import {
    deleteBlog,
    getCurrentBlog, 
    updateBlog
-   } from "../Controller/blog.controller";
+   } from "../Controller/blog.controller.js";
 
 const blogRoute=Router()
 
