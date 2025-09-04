@@ -20,10 +20,14 @@ app.use(express.static("public"))//yaha se hamari all files jo hume server se br
 
 import { userRouter } from "./Router/user.route.js"
 import { blogRoute } from "./Router/blog.route.js";
+import { paymentRoute } from "./Router/payment.route.js";
+import { getroute } from "./Router/get.route.js";
 
 
 app.use("/api/v1/user",userRouter)
-app.use("/api/v1/blog",blogRoute)
+app.use("/api/v1/user/blog",blogRoute)
+app.use("/api/v1/user/blog/payment",paymentRoute)
+app.use("/api/v1/get",getroute)
 
 
 export {app}

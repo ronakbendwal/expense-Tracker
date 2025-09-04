@@ -85,14 +85,13 @@ const updateBlog=asyncHandle(async(req,res)=>{
 })
 
 const getCurrentBlog=asyncHandle(async(req,res)=>{
-  const user=await USER.findById(req.user?._id)
-  if(!user){
-    throw new apiError(401,"User Not Found")
-  }
-  const blogData=await BLOG.findById(user?._id)
+  
+  const blogData=await BLOG.findById(req.user?._id)
 
   return res.status(200)
-  .json(new apiResponse(200,blogData,"sucessfully get the blog"))
+  .json(new apiResponse(200,
+    blogData,
+    "sucessfully get the blog"))
 })
 
 export {

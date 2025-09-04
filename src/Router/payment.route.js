@@ -1,6 +1,9 @@
 import { Router } from "express";
-import { verify } from "jsonwebtoken";
 import {addPayment} from "../Controller/addPayment.controller.js"
+import { verifyUser } from "../Middleware/auth.middleware.js";
 const paymentRoute=Router()
 
-paymentRoute.post("/pay/:blogId",verify,addPayment)
+paymentRoute.post("/:blogId",verifyUser,addPayment)
+
+
+export {paymentRoute}

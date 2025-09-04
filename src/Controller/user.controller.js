@@ -187,9 +187,10 @@ const updateUserInfo=asyncHandle(async(req,res)=>{
   //from req.user we get the current user 
   //now update all the info 
 
-  const {email,username}=req.body
+  console.log("req body=> ", req.body)
+  const {newemail,newusername}=req.body
 
-  if(!username || !email){
+  if( !newemail || !newusername){
     throw new apiError(401,"All Fields Are Required")
   }
 
@@ -197,8 +198,8 @@ const updateUserInfo=asyncHandle(async(req,res)=>{
     req.user?._id,
     {
       $set:{
-        email:email,
-        username:username,
+        email:newemail,
+        username:newusername,
       }
     },
     {new: true}
@@ -211,7 +212,7 @@ const updateUserInfo=asyncHandle(async(req,res)=>{
   return res.status(200)
   .json(
     new apiResponse(
-      201,
+      200,
       updateData,
       "User Info Sucessfully Updated"
     )

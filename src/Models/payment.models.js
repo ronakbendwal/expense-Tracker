@@ -9,6 +9,10 @@ date:{
   type:Date,
   default:Date.now
 },
+expense:{
+  type:mongoose.Types.ObjectId,
+  ref:"BLOG"
+},
 paymentAmount:{
   type:Number,
   required:true
